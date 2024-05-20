@@ -1,3 +1,5 @@
+import java.lang.Math;
+
 public class AlgorithmAnalysis {
 
     // Fragment #1
@@ -89,5 +91,56 @@ public class AlgorithmAnalysis {
             sum++;
         }
         System.out.println("Fragment 8: Sum = " + sum);
+    }
+
+    // Add the isPrime method here
+    public static boolean isPrime(int n) {
+        if (n <= 1) {
+            return false;
+        }
+        for (int i = 2; i * i <= n; i++) {
+            if (n % i == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static void main(String[] args) {
+        // Test isPrime method
+        System.out.println("Is 17 prime? " + isPrime(17)); // true
+        System.out.println("Is 15 prime? " + isPrime(15)); // false
+
+        // Test running times for 20-bit and 40-bit numbers
+        int num20BitPrimes = 0;
+        int num40BitPrimes = 0;
+        long startTime, endTime;
+
+        // Test 20-bit numbers
+        for (int i = 0; i < 100; i++) {
+            int num = (int) (Math.random() * ((1 << 20) - 1)) + 1; // Generate random 20-bit number
+            startTime = System.nanoTime();
+            boolean prime = isPrime(num);
+            endTime = System.nanoTime();
+            if (prime) {
+                num20BitPrimes++;
+            }
+            System.out.println("20-bit number: " + num + ", Prime: " + prime + ", Time: " + (endTime - startTime) + " ns");
+        }
+
+        // Test 40-bit numbers
+        for (int i = 0; i < 100; i++) {
+            int num = (int) (Math.random() * ((1 << 40) - 1)) + 1; // Generate random 40-bit number
+            startTime = System.nanoTime();
+            boolean prime = isPrime(num);
+            endTime = System.nanoTime();
+            if (prime) {
+                num40BitPrimes++;
+            }
+            System.out.println("40-bit number: " + num + ", Prime: " + prime + ", Time: " + (endTime - startTime) + " ns");
+        }
+
+        System.out.println("Number of 20-bit primes: " + num20BitPrimes);
+        System.out.println("Number of 40-bit primes: " + num40BitPrimes);
     }
 }
